@@ -13,6 +13,6 @@
 
 + (instancetype)sharedExplorer;
 
-- (void)showFromViewController:(UIViewController *)viewController;
+- (void)presentedByViewController:(UIViewController *)viewController;
 
 @end

@@ -52,7 +52,7 @@
 
 - (void)openFileExplorer
 {
-    [[NBLFileExplorer sharedExplorer] showFromViewController:self];
+    [[NBLFileExplorer sharedExplorer] presentedByViewController:self];
 }
 
 @end

@@ -11,15 +11,27 @@
 		B73505ED1E09162B0031A6D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B73505EC1E09162B0031A6D1 /* AppDelegate.m */; };
 		B73505F01E09162B0031A6D1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73505EF1E09162B0031A6D1 /* ViewController.m */; };
 		B73505F31E09162B0031A6D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73505F11E09162B0031A6D1 /* Main.storyboard */; };
-		B73505F51E09162B0031A6D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B73505F41E09162B0031A6D1 /* Assets.xcassets */; };
 		B73505F81E09162B0031A6D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B73505F61E09162B0031A6D1 /* LaunchScreen.storyboard */; };
 		B73506031E09162B0031A6D1 /* NBLFileExplorerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B73506021E09162B0031A6D1 /* NBLFileExplorerTests.m */; };
 		B735060E1E09162B0031A6D1 /* NBLFileExplorerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B735060D1E09162B0031A6D1 /* NBLFileExplorerUITests.m */; };
 		B73506211E09169A0031A6D1 /* NBLFileExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = B73506201E09169A0031A6D1 /* NBLFileExplorer.m */; };
+		B73D97641E4AFFF600E95547 /* NBLEditGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73D97631E4AFFF600E95547 /* NBLEditGalleryView.m */; };
+		B73D97671E4B009400E95547 /* NBLEditGalleryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B73D97661E4B009400E95547 /* NBLEditGalleryItemCell.m */; };
+		B73D976A1E4B016900E95547 /* NBLEditInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B73D97691E4B016900E95547 /* NBLEditInfo.m */; };
 		B75E2E021E13B76400AA8F0E /* NBLFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B75E2DF81E13B76400AA8F0E /* NBLFileInfo.m */; };
 		B75E2E031E13B76400AA8F0E /* NBLFileTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75E2DFB1E13B76400AA8F0E /* NBLFileTypeManager.m */; };
 		B75E2E041E13B76400AA8F0E /* NBLFileItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75E2DFE1E13B76400AA8F0E /* NBLFileItemCell.m */; };
 		B75E2E051E13B76400AA8F0E /* NBLFileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75E2E011E13B76400AA8F0E /* NBLFileListViewController.m */; };
+		B77F66AD1E56CD7F008FCAEF /* NBLFileListShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77F66AC1E56CD7F008FCAEF /* NBLFileListShowViewController.m */; };
+		B78FB5D01E1B852A005F6DA1 /* NBLFileGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = B78FB5CF1E1B852A005F6DA1 /* NBLFileGalleryView.m */; };
+		B78FB5D31E1B8F26005F6DA1 /* NBLFileGalleryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B78FB5D21E1B8F26005F6DA1 /* NBLFileGalleryItemCell.m */; };
+		B7AD6A891E30938E002F5035 /* NBLFileSortTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AD6A881E30938E002F5035 /* NBLFileSortTool.m */; };
+		B7BB7AE01E31E62400AAD987 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7BB7ADF1E31E62400AAD987 /* Assets.xcassets */; };
+		B7EF19F81E16011D001CCEDC /* NBLFileOperationMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF19F71E16011D001CCEDC /* NBLFileOperationMenu.m */; };
+		B7EF19FB1E160404001CCEDC /* NBLFileOperationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF19FA1E160404001CCEDC /* NBLFileOperationInfo.m */; };
+		B7EF19FE1E163364001CCEDC /* NBLFileMenuTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF19FD1E163364001CCEDC /* NBLFileMenuTool.m */; };
+		B7EF1A011E163A62001CCEDC /* NBLFileOperationItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF1A001E163A62001CCEDC /* NBLFileOperationItemCell.m */; };
+		B7FCB31A1E1CE714003CEA70 /* NBLSortOperationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCB3191E1CE714003CEA70 /* NBLSortOperationInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +59,6 @@
 		B73505EE1E09162B0031A6D1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B73505EF1E09162B0031A6D1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B73505F21E09162B0031A6D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B73505F41E09162B0031A6D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B73505F71E09162B0031A6D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B73505F91E09162B0031A6D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B73505FE1E09162B0031A6D1 /* NBLFileExplorerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NBLFileExplorerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +69,12 @@
 		B735060F1E09162B0031A6D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B735061F1E09169A0031A6D1 /* NBLFileExplorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileExplorer.h; sourceTree = "<group>"; };
 		B73506201E09169A0031A6D1 /* NBLFileExplorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileExplorer.m; sourceTree = "<group>"; };
+		B73D97621E4AFFF600E95547 /* NBLEditGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEditGalleryView.h; sourceTree = "<group>"; };
+		B73D97631E4AFFF600E95547 /* NBLEditGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEditGalleryView.m; sourceTree = "<group>"; };
+		B73D97651E4B009400E95547 /* NBLEditGalleryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEditGalleryItemCell.h; sourceTree = "<group>"; };
+		B73D97661E4B009400E95547 /* NBLEditGalleryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEditGalleryItemCell.m; sourceTree = "<group>"; };
+		B73D97681E4B016900E95547 /* NBLEditInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEditInfo.h; sourceTree = "<group>"; };
+		B73D97691E4B016900E95547 /* NBLEditInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEditInfo.m; sourceTree = "<group>"; };
 		B75E2DF71E13B76400AA8F0E /* NBLFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileInfo.h; sourceTree = "<group>"; };
 		B75E2DF81E13B76400AA8F0E /* NBLFileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileInfo.m; sourceTree = "<group>"; };
 		B75E2DFA1E13B76400AA8F0E /* NBLFileTypeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileTypeManager.h; sourceTree = "<group>"; };
@@ -66,6 +83,25 @@
 		B75E2DFE1E13B76400AA8F0E /* NBLFileItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileItemCell.m; sourceTree = "<group>"; };
 		B75E2E001E13B76400AA8F0E /* NBLFileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileListViewController.h; sourceTree = "<group>"; };
 		B75E2E011E13B76400AA8F0E /* NBLFileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileListViewController.m; sourceTree = "<group>"; };
+		B77F66AB1E56CD7F008FCAEF /* NBLFileListShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileListShowViewController.h; sourceTree = "<group>"; };
+		B77F66AC1E56CD7F008FCAEF /* NBLFileListShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileListShowViewController.m; sourceTree = "<group>"; };
+		B78FB5CE1E1B852A005F6DA1 /* NBLFileGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileGalleryView.h; sourceTree = "<group>"; };
+		B78FB5CF1E1B852A005F6DA1 /* NBLFileGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileGalleryView.m; sourceTree = "<group>"; };
+		B78FB5D11E1B8F26005F6DA1 /* NBLFileGalleryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileGalleryItemCell.h; sourceTree = "<group>"; };
+		B78FB5D21E1B8F26005F6DA1 /* NBLFileGalleryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileGalleryItemCell.m; sourceTree = "<group>"; };
+		B7AD6A871E30938E002F5035 /* NBLFileSortTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileSortTool.h; sourceTree = "<group>"; };
+		B7AD6A881E30938E002F5035 /* NBLFileSortTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileSortTool.m; sourceTree = "<group>"; };
+		B7BB7ADF1E31E62400AAD987 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = NBLFileExplorer/Assets.xcassets; sourceTree = "<group>"; };
+		B7EF19F61E16011D001CCEDC /* NBLFileOperationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileOperationMenu.h; sourceTree = "<group>"; };
+		B7EF19F71E16011D001CCEDC /* NBLFileOperationMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileOperationMenu.m; sourceTree = "<group>"; };
+		B7EF19F91E160404001CCEDC /* NBLFileOperationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileOperationInfo.h; sourceTree = "<group>"; };
+		B7EF19FA1E160404001CCEDC /* NBLFileOperationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileOperationInfo.m; sourceTree = "<group>"; };
+		B7EF19FC1E163364001CCEDC /* NBLFileMenuTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileMenuTool.h; sourceTree = "<group>"; };
+		B7EF19FD1E163364001CCEDC /* NBLFileMenuTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileMenuTool.m; sourceTree = "<group>"; };
+		B7EF19FF1E163A62001CCEDC /* NBLFileOperationItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLFileOperationItemCell.h; sourceTree = "<group>"; };
+		B7EF1A001E163A62001CCEDC /* NBLFileOperationItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLFileOperationItemCell.m; sourceTree = "<group>"; };
+		B7FCB3181E1CE714003CEA70 /* NBLSortOperationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLSortOperationInfo.h; sourceTree = "<group>"; };
+		B7FCB3191E1CE714003CEA70 /* NBLSortOperationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLSortOperationInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				B73505E71E09162B0031A6D1 /* NBLFileExplorer */,
+				B7BB7ADF1E31E62400AAD987 /* Assets.xcassets */,
 				B73506011E09162B0031A6D1 /* NBLFileExplorerTests */,
 				B735060C1E09162B0031A6D1 /* NBLFileExplorerUITests */,
 				B73505E61E09162B0031A6D1 /* Products */,
@@ -122,7 +159,6 @@
 				B73505EE1E09162B0031A6D1 /* ViewController.h */,
 				B73505EF1E09162B0031A6D1 /* ViewController.m */,
 				B73505F11E09162B0031A6D1 /* Main.storyboard */,
-				B73505F41E09162B0031A6D1 /* Assets.xcassets */,
 				B73505F61E09162B0031A6D1 /* LaunchScreen.storyboard */,
 				B73505F91E09162B0031A6D1 /* Info.plist */,
 				B73505E81E09162B0031A6D1 /* Supporting Files */,
@@ -174,6 +210,12 @@
 			children = (
 				B75E2DF71E13B76400AA8F0E /* NBLFileInfo.h */,
 				B75E2DF81E13B76400AA8F0E /* NBLFileInfo.m */,
+				B7EF19F91E160404001CCEDC /* NBLFileOperationInfo.h */,
+				B7EF19FA1E160404001CCEDC /* NBLFileOperationInfo.m */,
+				B7FCB3181E1CE714003CEA70 /* NBLSortOperationInfo.h */,
+				B7FCB3191E1CE714003CEA70 /* NBLSortOperationInfo.m */,
+				B73D97681E4B016900E95547 /* NBLEditInfo.h */,
+				B73D97691E4B016900E95547 /* NBLEditInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,6 +225,10 @@
 			children = (
 				B75E2DFA1E13B76400AA8F0E /* NBLFileTypeManager.h */,
 				B75E2DFB1E13B76400AA8F0E /* NBLFileTypeManager.m */,
+				B7EF19FC1E163364001CCEDC /* NBLFileMenuTool.h */,
+				B7EF19FD1E163364001CCEDC /* NBLFileMenuTool.m */,
+				B7AD6A871E30938E002F5035 /* NBLFileSortTool.h */,
+				B7AD6A881E30938E002F5035 /* NBLFileSortTool.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -192,6 +238,18 @@
 			children = (
 				B75E2DFD1E13B76400AA8F0E /* NBLFileItemCell.h */,
 				B75E2DFE1E13B76400AA8F0E /* NBLFileItemCell.m */,
+				B7EF19F61E16011D001CCEDC /* NBLFileOperationMenu.h */,
+				B7EF19F71E16011D001CCEDC /* NBLFileOperationMenu.m */,
+				B7EF19FF1E163A62001CCEDC /* NBLFileOperationItemCell.h */,
+				B7EF1A001E163A62001CCEDC /* NBLFileOperationItemCell.m */,
+				B78FB5CE1E1B852A005F6DA1 /* NBLFileGalleryView.h */,
+				B78FB5CF1E1B852A005F6DA1 /* NBLFileGalleryView.m */,
+				B78FB5D11E1B8F26005F6DA1 /* NBLFileGalleryItemCell.h */,
+				B78FB5D21E1B8F26005F6DA1 /* NBLFileGalleryItemCell.m */,
+				B73D97621E4AFFF600E95547 /* NBLEditGalleryView.h */,
+				B73D97631E4AFFF600E95547 /* NBLEditGalleryView.m */,
+				B73D97651E4B009400E95547 /* NBLEditGalleryItemCell.h */,
+				B73D97661E4B009400E95547 /* NBLEditGalleryItemCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -201,6 +259,8 @@
 			children = (
 				B75E2E001E13B76400AA8F0E /* NBLFileListViewController.h */,
 				B75E2E011E13B76400AA8F0E /* NBLFileListViewController.m */,
+				B77F66AB1E56CD7F008FCAEF /* NBLFileListShowViewController.h */,
+				B77F66AC1E56CD7F008FCAEF /* NBLFileListShowViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -312,7 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B73505F81E09162B0031A6D1 /* LaunchScreen.storyboard in Resources */,
-				B73505F51E09162B0031A6D1 /* Assets.xcassets in Resources */,
+				B7BB7AE01E31E62400AAD987 /* Assets.xcassets in Resources */,
 				B73505F31E09162B0031A6D1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,14 +398,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B73D97641E4AFFF600E95547 /* NBLEditGalleryView.m in Sources */,
+				B78FB5D31E1B8F26005F6DA1 /* NBLFileGalleryItemCell.m in Sources */,
+				B73D97671E4B009400E95547 /* NBLEditGalleryItemCell.m in Sources */,
 				B73505F01E09162B0031A6D1 /* ViewController.m in Sources */,
+				B7EF1A011E163A62001CCEDC /* NBLFileOperationItemCell.m in Sources */,
 				B73505ED1E09162B0031A6D1 /* AppDelegate.m in Sources */,
+				B7FCB31A1E1CE714003CEA70 /* NBLSortOperationInfo.m in Sources */,
 				B73505EA1E09162B0031A6D1 /* main.m in Sources */,
+				B73D976A1E4B016900E95547 /* NBLEditInfo.m in Sources */,
 				B75E2E041E13B76400AA8F0E /* NBLFileItemCell.m in Sources */,
+				B7EF19FB1E160404001CCEDC /* NBLFileOperationInfo.m in Sources */,
 				B73506211E09169A0031A6D1 /* NBLFileExplorer.m in Sources */,
+				B7EF19F81E16011D001CCEDC /* NBLFileOperationMenu.m in Sources */,
 				B75E2E051E13B76400AA8F0E /* NBLFileListViewController.m in Sources */,
 				B75E2E031E13B76400AA8F0E /* NBLFileTypeManager.m in Sources */,
+				B78FB5D01E1B852A005F6DA1 /* NBLFileGalleryView.m in Sources */,
 				B75E2E021E13B76400AA8F0E /* NBLFileInfo.m in Sources */,
+				B7AD6A891E30938E002F5035 /* NBLFileSortTool.m in Sources */,
+				B77F66AD1E56CD7F008FCAEF /* NBLFileListShowViewController.m in Sources */,
+				B7EF19FE1E163364001CCEDC /* NBLFileMenuTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,6 +44,22 @@ typedef NS_ENUM(NSInteger, NBLFileType) {
     
 };
 
+
+typedef NS_ENUM(NSInteger, NBLFileOperationType) {
+    kNBLFileOperationTypeShowList,
+    kNBLFileOperationTypeShowGallery,
+    kNBLFileOperationTypeEdit,
+    kNBLFileOperationTypeSort,
+};
+
+
+typedef NS_ENUM(NSInteger, NBLEditType) {
+    kNBLEditTypeCopy,
+    kNBLEditTypeCut,
+    kNBLEditTypeRename,
+    kNBLEditTypeDelete,
+};
+
 @interface NBLFileTypeManager : NSObject
 
 + (NBLFileType)parseFileType:(NSString *)extension;

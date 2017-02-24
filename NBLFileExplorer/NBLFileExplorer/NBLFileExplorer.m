@@ -23,12 +23,12 @@
 }
 
 
-- (void)showFromViewController:(UIViewController *)viewController
+- (void)presentedByViewController:(UIViewController *)viewController
 {
-    NSAssert(viewController.navigationController, @"navigationController can't be nil");
     NBLFileListViewController *fileListVC = [[NBLFileListViewController alloc] init];
     fileListVC.currentLocation = NSHomeDirectory();
-    [viewController.navigationController pushViewController:fileListVC animated:YES];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fileListVC];
+    [viewController presentViewController:nav animated:YES completion:nil];
 }
 
 @end

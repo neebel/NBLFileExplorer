@@ -7,21 +7,50 @@
 //
 
 #import "NBLFileListViewController.h"
+#import "NBLFileListShowViewController.h"
 #import "NBLFileInfo.h"
 #import "NBLFileItemCell.h"
+#import "NBLFileMenuTool.h"
+#import "NBLFileGalleryView.h"
+#import "NBLEditGalleryView.h"
+#import "NBLSortOperationInfo.h"
+#import "NBLFileSortTool.h"
 
 static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 
-@interface NBLFileListViewController ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate>
+@interface NBLFileListViewController ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, NBLFileMenuToolDelegate, NBLFileGalleryViewDelegate, NBLEditGalleryViewDelegate, UIActionSheetDelegate, NBLFileListShowViewControllerDelegate>
 
-@property (nonatomic, strong) UIView *currentLocationView;
-@property (nonatomic, strong) UIButton *backButton;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+
+@property (nonatomic, strong) UIView *searchBGView;
+@property (nonatomic, strong) UIBarButtonItem *backButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *moreButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *doneButtonItem;
 @property (nonatomic, strong) UILabel *currentLocationLabel;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIAlertView *deleteAlertView;
+@property (nonatomic, strong) UIAlertView *renameAlertView;
+@property (nonatomic, strong) NBLFileGalleryView *galleryView;
+@property (nonatomic, strong) NBLEditGalleryView *editGalleryView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) NSArray *filesArr;
-@property (nonatomic, strong) NBLFileInfo *selectedFileInfo;
+@property (nonatomic, strong) NSArray *sortInfos;
+@property (nonatomic, strong) NBLSortOperationInfo *sortOperationInfo;
 @property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
+//NavigationBar
+@property (nonatomic, assign) BOOL previousNavBarHidden;
+@property (nonatomic, assign) BOOL previousNavBarTranslucent;
+@property (nonatomic, assign) BOOL didSavePreviousStateOfNavBar;
+@property (nonatomic, assign) UIBarStyle previousNavBarStyle;
+@property (nonatomic, assign) UIStatusBarStyle previousStatusBarStyle;
+@property (nonatomic, strong) UIColor *previousNavBarTintColor;
+@property (nonatomic, strong) UIColor *previousNavBarBarTintColor;
+@property (nonatomic, strong) UIBarButtonItem *previousViewControllerBackButton;
+@property (nonatomic, strong) UIImage *previousNavigationBarBackgroundImageDefault;
 
 @end
 
@@ -29,53 +58,86 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 
 #pragma mark - LifeCycle
 
-- (void)viewDidLoad {
+- (void)dealloc
+{
+    _tableView.delegate = nil;
+    _tableView.dataSource = nil;
+}
+
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self initUI];
     [self refreshCurrentLocation];
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self storePreviousNavBarAppearance];
+    [self setNavBarAppearance:animated];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self restorePreviousNavBarAppearance:animated];
 }
 
 #pragma mark - Getter
 
-- (UIView *)currentLocationView
+- (UIView *)searchBGView
 {
-    if (!_currentLocationView) {
-        UIView *currentLocationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-        currentLocationView.backgroundColor = [UIColor colorWithRed:0.08 green:0.49 blue:0.98 alpha:1.0];
-        currentLocationView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _currentLocationView = currentLocationView;
+    if (!_searchBGView) {
+        UIView *searchBGView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+        searchBGView.backgroundColor = [UIColor colorWithRed:0.94 green:0.94 blue:0.96 alpha:1.0];
+        searchBGView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _searchBGView = searchBGView;
     }
     
-    return _currentLocationView;
+    return _searchBGView;
 }
 
 
-- (UIButton *)backButton
+- (UIBarButtonItem *)moreButtonItem
 {
-    if (!_backButton) {
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(12, 0, 40, 40)];
-        [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-        backButton.contentMode = UIViewContentModeScaleAspectFit;
-        [backButton addTarget:self
-                       action:@selector(backAction)
-             forControlEvents:UIControlEventTouchUpInside];
-        _backButton = backButton;
+    if (!_moreButtonItem) {
+        UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
+        _moreButtonItem = moreButtonItem;
     }
     
-    return _backButton;
+    return _moreButtonItem;
+}
+
+
+- (UIBarButtonItem *)doneButtonItem
+{
+    if (!_doneButtonItem) {
+        UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneAction)];
+        _doneButtonItem = doneButtonItem;
+    }
+
+    return _doneButtonItem;
+}
+
+- (UIBarButtonItem *)backButtonItem
+{
+    if (!_backButtonItem) {
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+        _backButtonItem = backButtonItem;
+    }
+    
+    return _backButtonItem;
 }
 
 
 - (UILabel *)currentLocationLabel
 {
     if (!_currentLocationLabel) {
-        UILabel *currentLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, self.view.frame.size.width - 60 - 12, 40)];
-        currentLocationLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        UILabel *currentLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
         currentLocationLabel.textColor = [UIColor whiteColor];
         currentLocationLabel.font = [UIFont systemFontOfSize:12.0f];
         currentLocationLabel.lineBreakMode = NSLineBreakByTruncatingHead;
@@ -107,12 +169,37 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 }
 
 
+- (NBLFileGalleryView *)galleryView
+{
+    if (!_galleryView) {
+        NBLFileGalleryView *galleryView = [[NBLFileGalleryView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - 50)];
+        galleryView.delegate = self;
+        galleryView.hidden = YES;
+        _galleryView = galleryView;
+    }
+    
+    return _galleryView;
+}
+
+
+- (NBLEditGalleryView *)editGalleryView
+{
+    if (!_editGalleryView) {
+        NBLEditGalleryView *editGalleryView = [[NBLEditGalleryView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 60)];
+        editGalleryView.delegate = self;
+        _editGalleryView = editGalleryView;
+    }
+    
+    return _editGalleryView;
+}
+
+
 - (UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
         searchBar.delegate = self;
-        searchBar.placeholder = @"Search file";
+        searchBar.placeholder = @"Global Search";
         _searchBar = searchBar;
     }
     
@@ -120,7 +207,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 }
 
 
-- (NSArray *)files
+- (NSArray *)filesArr
 {
     if (!_filesArr) {
         NSArray *filesArr = [NSArray array];
@@ -130,18 +217,40 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
     return _filesArr;
 }
 
+
+- (NSArray *)sortInfos
+{
+    if (!_sortInfos) {
+        NBLSortOperationInfo *nameSortInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:kNBLSortCategoryFileName
+                                                                                      sortOrder:kNBLSortNoOrder];
+         NBLSortOperationInfo *sizeSortInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:kNBLSortCategoryFileSize
+                                                                                       sortOrder:kNBLSortNoOrder];
+         NBLSortOperationInfo *typeSortInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:kNBLSortCategoryFileType
+                                                                                       sortOrder:kNBLSortNoOrder];
+         NBLSortOperationInfo *modifyDateSortInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:kNBLSortCategoryModifyDate
+                                                                                             sortOrder:kNBLSortNoOrder];
+        NBLSortOperationInfo *noSortInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:kNBLSortCategoryNone sortOrder:kNBLSortNoOrder];
+        NSArray *sortInfos = [NSArray arrayWithObjects:nameSortInfo, sizeSortInfo, typeSortInfo, modifyDateSortInfo, noSortInfo, nil];
+        _sortInfos = sortInfos;
+        _sortOperationInfo = noSortInfo;
+    }
+
+    return _sortInfos;
+}
+
 #pragma mark - Private
 
 - (void)initUI
 {
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.titleView = self.searchBar;
-    [self.currentLocationView addSubview:self.backButton];
-    [self.currentLocationView addSubview:self.currentLocationLabel];
-    [self.view addSubview:self.currentLocationView];
+    self.navigationItem.titleView = self.currentLocationLabel;
+    self.navigationItem.rightBarButtonItem = self.moreButtonItem;
+    self.navigationItem.leftBarButtonItem = self.backButtonItem;
+    [self.searchBGView addSubview:self.searchBar];
+    [self.view addSubview:self.searchBGView];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.galleryView];
 }
 
 
@@ -152,9 +261,23 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 }
 
 
+- (void)reloadData
+{
+    [self.tableView reloadData];
+    [self.galleryView reloadDataWithDataSource:self.filesArr];
+}
+
 - (void)updateCurrentLocation
 {
     self.currentLocationLabel.text = self.currentLocation;
+}
+
+
+- (void)updateBackButton:(UIImage *)img
+{
+    if ([[self.currentLocation stringByDeletingLastPathComponent] isEqualToString:NSHomeDirectory()]) {
+        self.backButtonItem.image = img;
+    }
 }
 
 
@@ -186,7 +309,12 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
         self.filesArr = filesMutArr;
     }
     
-    [self.tableView reloadData];
+    if (self.sortOperationInfo && self.sortOperationInfo.sortCategory != kNBLSortCategoryNone) {
+        NSArray *fileArr = [NBLFileSortTool sortFileWithSortInfo:self.sortOperationInfo fileArr:self.filesArr];
+        self.filesArr = fileArr;
+    }
+    
+    [self reloadData];
 }
 
 
@@ -215,24 +343,177 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 }
 
 
-- (void)showNotFoundTips
+- (void)showSimpleTips:(NSString *)tips
 {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Tips" message:@"Not found!" delegate:self cancelButtonTitle:@"Confirm" otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Tips" message:tips delegate:self cancelButtonTitle:@"Confirm" otherButtonTitles:nil];
     [alertView show];
-#pragma clang diagnostic pop
 }
 
-- (void)showCannotOpenTips
+
+- (void)showTwoButtonTips:(NSString *)tips alertViewStyle:(UIAlertViewStyle)alertViewStyle
 {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Tips" message:@"No application can support, you can go to Appstore to find the appropriate application!" delegate:self cancelButtonTitle:@"Confirm" otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Tips" message:tips delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    [alertView setAlertViewStyle:alertViewStyle];
     [alertView show];
-#pragma clang diagnostic pop
+    if (alertViewStyle == UIAlertViewStyleDefault) {
+        self.deleteAlertView = alertView;
+    } else if (alertViewStyle == UIAlertViewStylePlainTextInput) {
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NBLFileInfo *fileInfo = self.filesArr[self.selectedIndexPath.row];
+        textField.text = [fileInfo.fileName stringByDeletingPathExtension];
+        self.renameAlertView = alertView;
+    }
+}
+
+
+- (void)switchViewMode:(NBLFileOperationType)operationType
+{
+    if (operationType == kNBLFileOperationTypeShowList) {
+        self.tableView.hidden = NO;
+        self.galleryView.hidden = YES;
+    } else if (operationType == kNBLFileOperationTypeShowGallery) {
+        self.tableView.hidden = YES;
+        self.galleryView.hidden = NO;
+    }
+}
+
+
+- (void)showActionSheet
+{
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
+    for (NBLSortOperationInfo *info in self.sortInfos) {
+        [self.actionSheet addButtonWithTitle:info.name];
+    }
+    
+    [self.actionSheet showInView:self.view];
+}
+
+
+- (void)showEditView
+{
+    [self.editGalleryView showFromView:self.view];
+}
+
+
+- (void)dismissEditView
+{
+    self.selectedIndexPath = nil;
+    [self.galleryView clearDirtyData];
+    [self.editGalleryView dismiss];
+}
+
+
+- (void)openEditMode
+{
+    self.navigationItem.rightBarButtonItem = self.doneButtonItem;
+    
+    if (self.tableView.isHidden) {
+        [self.galleryView setEditing:YES];
+    } else {
+        [self.tableView setEditing:YES animated:YES];
+    }
+}
+
+
+- (void)deleteFile:(NBLFileInfo *)fileInfo
+{
+    NSString *errorMessage = nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager isDeletableFileAtPath:fileInfo.filePath]) {
+        NSError *error;
+        [fileManager removeItemAtPath:fileInfo.filePath error:&error];
+        errorMessage = error.localizedDescription;
+    } else {
+        errorMessage = @"this file cann't be deleted";
+    }
+    
+    [self dealWithEditResult:errorMessage];
+}
+
+
+- (void)renameFile:(NBLFileInfo *)fileInfo withNewName:(NSString *)newName
+{
+    NSString *errorMessage = nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager isWritableFileAtPath:fileInfo.filePath]) {
+        NSError *error;
+        NSString *destPath = [fileInfo.filePath stringByDeletingLastPathComponent];
+        NSString *fileName;
+        if ([fileInfo isFolder]) {
+            fileName = newName;
+        } else {
+            fileName = [NSString stringWithFormat:@"%@.%@", newName, fileInfo.filePath.pathExtension];
+        }
+        destPath = [destPath stringByAppendingPathComponent:fileName];
+        [fileManager moveItemAtPath:fileInfo.filePath toPath:destPath error:&error];
+        errorMessage = error.localizedDescription;
+    } else {
+        errorMessage = @"this file cann't be renamed";
+    }
+    
+    [self dealWithEditResult:errorMessage];
+}
+
+
+- (void)copyFile:(NBLFileInfo *)fileInfo toDestPath:(NSString *)destPath
+{
+    NSString *errorMessage = nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileInfo.filePath isEqualToString:destPath]) {
+        errorMessage = @"this file cann't be copied to itself";
+    } else if ([fileManager isReadableFileAtPath:fileInfo.filePath] && [fileManager isWritableFileAtPath:destPath]) {
+        NSError *error;
+        NSString *trueDestPath = [destPath stringByAppendingPathComponent:fileInfo.fileName];
+        [fileManager copyItemAtPath:fileInfo.filePath toPath:trueDestPath error:&error];
+        errorMessage = error.localizedDescription;
+    } else {
+        errorMessage = @"this file cann't be copied";
+    }
+    
+    [self dealWithEditResult:errorMessage];
+}
+
+
+- (void)moveFile:(NBLFileInfo *)fileInfo toDestPath:(NSString *)destPath
+{
+    NSString *errorMessage = nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileInfo.filePath isEqualToString:destPath]) {
+        errorMessage = @"this file cann't be moved to itself";
+    } else if ([fileManager isReadableFileAtPath:fileInfo.filePath] && [fileManager isWritableFileAtPath:destPath]) {
+        NSError *error;
+        NSString *trueDestPath = [destPath stringByAppendingPathComponent:fileInfo.fileName];
+        [fileManager moveItemAtPath:fileInfo.filePath toPath:trueDestPath error:&error];
+        errorMessage = error.localizedDescription;
+    } else {
+        errorMessage = @"this file cann't be moved";
+    }
+    
+    [self dealWithEditResult:errorMessage];
+}
+
+
+- (void)dealWithEditResult:(NSString *)errorMessage
+{
+    if (errorMessage.length > 0) {
+        [self showSimpleTips:errorMessage];
+    } else {
+        [self listAllFiles];
+        [self dismissEditView];
+    }
+}
+
+
+- (void)showFileListVCWithEditType:(NBLEditType)editType
+{
+    NBLFileListShowViewController *listShowVC = [[NBLFileListShowViewController alloc] init];
+    listShowVC.currentLocation = NSHomeDirectory();
+    listShowVC.editType = editType;
+    listShowVC.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:listShowVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - Action
@@ -240,9 +521,94 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 - (void)backAction
 {
     if (![self.currentLocation isEqualToString:NSHomeDirectory()]) {
+        [self updateBackButton:[UIImage imageNamed:@"close"]];
         self.currentLocation = [self.currentLocation stringByDeletingLastPathComponent];
         [self refreshCurrentLocation];
-        
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[NBLFileMenuTool sharedTool] destoryMenu];
+    }
+}
+
+
+- (void)moreAction
+{
+    [[NBLFileMenuTool sharedTool] showWithDelegate:self];
+}
+
+
+- (void)doneAction
+{
+    [self dismissEditView];
+    
+    self.navigationItem.rightBarButtonItem = self.moreButtonItem;
+    
+    if (self.tableView.isHidden) {
+        [self.galleryView setEditing:NO];
+    } else {
+        [self.tableView setEditing:NO animated:YES];
+    }
+}
+
+
+- (void)jumpToNextFolderWithIndexPath:(NSIndexPath *)indexPath
+{
+    NBLFileInfo *fileInfo = self.filesArr[indexPath.row];
+    if (fileInfo.isFolder) {
+        self.currentLocation = fileInfo.filePath;
+        [self updateBackButton:[UIImage imageNamed:@"back"]];
+        [self refreshCurrentLocation];
+    } else {
+        //open file option
+        self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:fileInfo.filePath]];
+        BOOL canOpen = [self.documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+        if (!canOpen) {
+            [self showSimpleTips:@"No application can support, you can go to Appstore to find the appropriate application!"];
+        }
+    }
+}
+
+#pragma mark - NavigationBar
+
+- (void)setNavBarAppearance:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    navBar.tintColor = [UIColor whiteColor];
+    navBar.barTintColor = nil;
+    navBar.shadowImage = nil;
+    navBar.translucent = YES;
+    navBar.barStyle = UIBarStyleBlackTranslucent;
+    [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+}
+
+
+- (void)storePreviousNavBarAppearance
+{
+    self.didSavePreviousStateOfNavBar = YES;
+    self.previousNavBarBarTintColor = self.navigationController.navigationBar.barTintColor;
+    self.previousNavBarTranslucent = self.navigationController.navigationBar.translucent;
+    self.previousNavBarTintColor = self.navigationController.navigationBar.tintColor;
+    self.previousNavBarHidden = self.navigationController.navigationBarHidden;
+    self.previousNavBarStyle = self.navigationController.navigationBar.barStyle;
+    self.previousNavigationBarBackgroundImageDefault = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
+}
+
+
+- (void)restorePreviousNavBarAppearance:(BOOL)animated
+{
+    if (self.didSavePreviousStateOfNavBar) {
+        [self.navigationController setNavigationBarHidden:self.previousNavBarHidden animated:animated];
+        UINavigationBar *navBar = self.navigationController.navigationBar;
+        navBar.tintColor = self.previousNavBarTintColor;
+        navBar.translucent = self.previousNavBarTranslucent;
+        navBar.barTintColor = self.previousNavBarBarTintColor;
+        navBar.barStyle = self.previousNavBarStyle;
+        [navBar setBackgroundImage:self.previousNavigationBarBackgroundImageDefault forBarMetrics:UIBarMetricsDefault];
+        if (self.previousViewControllerBackButton) {
+            UIViewController *previousViewController = [self.navigationController topViewController];            previousViewController.navigationItem.backBarButtonItem = self.previousViewControllerBackButton;
+            self.previousViewControllerBackButton = nil;
+        }
     }
 }
 
@@ -270,20 +636,28 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NBLFileInfo *fileInfo = self.filesArr[indexPath.row];
-    self.selectedFileInfo = fileInfo;
-    if (fileInfo.isFolder) {
-        self.currentLocation = fileInfo.filePath;
-        [self refreshCurrentLocation];
+    if (self.tableView.isEditing) {
+        [tableView deselectRowAtIndexPath:self.selectedIndexPath animated:YES];
+        self.selectedIndexPath = indexPath;
+        [self showEditView];
     } else {
-        //open file option
-        self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:fileInfo.filePath]];
-        BOOL canOpen = [self.documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
-        if (!canOpen) {
-            [self showCannotOpenTips];
-        }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self jumpToNextFolderWithIndexPath:indexPath];
     }
+}
+
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.tableView.isEditing) {
+        [self dismissEditView];
+    }
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
 }
 
 #pragma mark - UISearchBarDelegate
@@ -306,9 +680,9 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
         fileInfo.filePath = filePath;
         fileInfo.isFolder = NO;
         self.filesArr = [NSArray arrayWithObjects:fileInfo, nil];
-        [self.tableView reloadData];
+        [self reloadData];
     } else {
-        [self showNotFoundTips];
+        [self showSimpleTips:@"Not found!"];
     }
 }
 
@@ -318,4 +692,145 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
     searchBar.showsCancelButton = YES;
 }
 
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex <= 0) {
+        return;
+    }
+    
+    NBLSortOperationInfo *info = self.sortInfos[buttonIndex - 1];
+    
+    NBLSortOrder sortOrder = kNBLSortNoOrder;
+    if (self.sortOperationInfo.sortCategory != kNBLSortCategoryNone) {
+        if (info.sortCategory == self.sortOperationInfo.sortCategory) {
+            sortOrder = self.sortOperationInfo.sortOrder == kNBLSortOrderUp ? kNBLSortOrderDown : kNBLSortOrderUp;
+        } else {
+            sortOrder = self.sortOperationInfo.sortOrder;
+        }
+    } else {
+        sortOrder = kNBLSortOrderUp;
+    }
+    
+    NSMutableArray *tmpArr  =[NSMutableArray arrayWithArray:self.sortInfos];
+    NBLSortOperationInfo *newTmpInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:info.sortCategory sortOrder:sortOrder];
+    [tmpArr replaceObjectAtIndex:buttonIndex - 1 withObject:newTmpInfo];
+    
+    if (info != self.sortOperationInfo) {
+        NBLSortOperationInfo *oldTmpInfo = [[NBLSortOperationInfo alloc] initWithSortCategory:self.sortOperationInfo.sortCategory sortOrder:kNBLSortNoOrder];
+        [tmpArr replaceObjectAtIndex:[self.sortInfos indexOfObject:self.sortOperationInfo] withObject:oldTmpInfo];
+    }
+    
+    self.sortInfos = tmpArr;
+    self.sortOperationInfo = newTmpInfo;
+    
+    if (self.sortOperationInfo.sortCategory != kNBLSortCategoryNone) {
+        NSArray *fileArr = [NBLFileSortTool sortFileWithSortInfo:self.sortOperationInfo fileArr:self.filesArr];
+        self.filesArr = fileArr;
+        [self reloadData];
+    } else {
+        [self listAllFiles];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if (alertView == self.deleteAlertView) {
+            [self deleteFile:self.filesArr[self.selectedIndexPath.row]];
+        } else if (alertView == self.renameAlertView) {
+            UITextField *textField = [alertView textFieldAtIndex:0];
+            NSString *inputStr = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+            if (inputStr.length == 0) {
+                return;
+            }
+            
+            [self renameFile:self.filesArr[self.selectedIndexPath.row] withNewName:inputStr];
+        }
+    }
+}
+
+#pragma mark - NBLFileMenuToolDelegate
+
+- (void)choseMenuType:(NBLFileOperationType)type
+{
+    switch (type) {
+        case kNBLFileOperationTypeShowList: case kNBLFileOperationTypeShowGallery:
+            [self switchViewMode:type];
+            break;
+            
+        case kNBLFileOperationTypeEdit:
+            [self openEditMode];
+            break;
+            
+        case kNBLFileOperationTypeSort:
+            [self showActionSheet];
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+#pragma mark - NBLFileGalleryViewDelegate
+
+- (void)collectionViewDidSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.galleryView.isEditing) {
+        self.selectedIndexPath = indexPath;
+        if (self.selectedIndexPath) {
+            [self showEditView];
+        } else {
+            [self dismissEditView];
+        }
+    } else {
+        [self jumpToNextFolderWithIndexPath:indexPath];
+    }
+}
+
+#pragma mark - NBLEditGalleryViewDelegate
+
+- (void)editCollectionViewDidSelectEditInfo:(NBLEditInfo *)editInfo
+{
+    switch (editInfo.editType) {
+        case kNBLEditTypeCopy: case kNBLEditTypeCut:
+            [self showFileListVCWithEditType:editInfo.editType];
+            break;
+        
+        case kNBLEditTypeRename:
+            [self showTwoButtonTips:@"Enter name of file" alertViewStyle:UIAlertViewStylePlainTextInput];
+            break;
+            
+        case kNBLEditTypeDelete:
+            [self showTwoButtonTips:@"confirm delete this File?" alertViewStyle:UIAlertViewStyleDefault];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - NBLFileListShowViewControllerDelegate
+
+- (void)pasteWithEditType:(NBLEditType)editType destPath:(NSString *)destPath
+{
+    switch (editType) {
+        case kNBLEditTypeCopy:
+            [self copyFile:self.filesArr[self.selectedIndexPath.row] toDestPath:destPath];
+            break;
+            
+        case kNBLEditTypeCut:
+            [self moveFile:self.filesArr[self.selectedIndexPath.row] toDestPath:destPath];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma clang diagnostic pop
 @end
