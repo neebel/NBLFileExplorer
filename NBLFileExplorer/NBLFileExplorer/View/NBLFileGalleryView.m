@@ -99,7 +99,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 
 - (NSArray *)selectedArr
 {
-    if (!_selectedArr) {
+    if (!_selectedArr || _selectedArr.count != _filesArr.count) {
         NSMutableArray *selectedArr = [NSMutableArray array];
         for (NSInteger i = 0; i < _filesArr.count; i++) {
             [selectedArr addObject:@(NO)];
