@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "NBLFileExplorer"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "an iOS tool for manager sandbox file"
 
   # This description is used to generate tags and improve search results.
@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  s.resources = "Resources/icon.bundle"
+  s.resources = "icon.bundle"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
