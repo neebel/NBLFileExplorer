@@ -72,8 +72,8 @@
         UIButton *selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
         selectButton.contentMode = UIViewContentModeTopRight;
         selectButton.adjustsImageWhenHighlighted = NO;
-        [selectButton setImage:[UIImage imageNamed:@"ImageSelectedOff"] forState:UIControlStateNormal];
-        [selectButton setImage:[UIImage imageNamed:@"ImageSelectedOn"] forState:UIControlStateSelected];
+        [selectButton setImage:[UIImage imageNamed:@"icon.bundle/ImageSelectedOff"] forState:UIControlStateNormal];
+        [selectButton setImage:[UIImage imageNamed:@"icon.bundle/ImageSelectedOn"] forState:UIControlStateSelected];
         [selectButton addTarget:self action:@selector(selectButtonPressed) forControlEvents:UIControlEventTouchDown];
         selectButton.hidden = NO;
         selectButton.frame = CGRectMake(0, 0, 24, 24);
@@ -114,7 +114,7 @@
 {
     UIImage *fileImage = nil;
     if (fileInfo.isFolder) {
-        fileImage = [UIImage imageNamed:@"folder"];
+        fileImage = [UIImage imageNamed:@"icon.bundle/folder"];
     } else {
         fileImage = [NBLFileTypeManager searchFileLogoWithFileType:fileInfo.fileType];
     }

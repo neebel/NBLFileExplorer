@@ -16,22 +16,22 @@
     
     switch (editType) {
         case kNBLEditTypeCopy:
-            _editIcon = [UIImage imageNamed:@"copy"];
+            _editIcon = [UIImage imageNamed:@"icon.bundle/copy"];
             _editName = @"Copy";
             break;
             
         case kNBLEditTypeCut:
-            _editIcon = [UIImage imageNamed:@"cut"];
+            _editIcon = [UIImage imageNamed:@"icon.bundle/cut"];
             _editName = @"Cut";
             break;
             
         case kNBLEditTypeRename:
-            _editIcon = [UIImage imageNamed:@"rename"];
+            _editIcon = [UIImage imageNamed:@"icon.bundle/rename"];
             _editName = @"Rename";
             break;
             
         case kNBLEditTypeDelete:
-            _editIcon = [UIImage imageNamed:@"delete"];
+            _editIcon = [UIImage imageNamed:@"icon.bundle/delete"];
             _editName = @"Delete";
             break;
             

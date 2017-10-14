@@ -71,7 +71,10 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 - (void)clearDirtyData
 {
     NSMutableArray *tmpArr = [NSMutableArray arrayWithArray:self.selectedArr];
-    [tmpArr replaceObjectAtIndex:self.selectedIndexPath.row withObject:@(NO)];
+    if (tmpArr.count > 0) {
+        [tmpArr replaceObjectAtIndex:self.selectedIndexPath.row withObject:@(NO)];
+    }
+    
     self.selectedArr = tmpArr;
     self.selectedIndexPath = nil;
 }

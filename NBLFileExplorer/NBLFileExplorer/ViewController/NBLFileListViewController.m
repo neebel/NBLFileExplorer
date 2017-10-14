@@ -105,7 +105,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 - (UIBarButtonItem *)moreButtonItem
 {
     if (!_moreButtonItem) {
-        UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
+        UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon.bundle/more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
         _moreButtonItem = moreButtonItem;
     }
     
@@ -126,7 +126,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 - (UIBarButtonItem *)backButtonItem
 {
     if (!_backButtonItem) {
-        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon.bundle/close"] style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
         _backButtonItem = backButtonItem;
     }
     
@@ -521,7 +521,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
 - (void)backAction
 {
     if (![self.currentLocation isEqualToString:NSHomeDirectory()]) {
-        [self updateBackButton:[UIImage imageNamed:@"close"]];
+        [self updateBackButton:[UIImage imageNamed:@"icon.bundle/close"]];
         self.currentLocation = [self.currentLocation stringByDeletingLastPathComponent];
         [self refreshCurrentLocation];
     } else {
@@ -556,7 +556,7 @@ static NSString *fileItemCellIdentifier = @"fileItemCellIdentifier";
     NBLFileInfo *fileInfo = self.filesArr[indexPath.row];
     if (fileInfo.isFolder) {
         self.currentLocation = fileInfo.filePath;
-        [self updateBackButton:[UIImage imageNamed:@"back"]];
+        [self updateBackButton:[UIImage imageNamed:@"icon.bundle/back"]];
         [self refreshCurrentLocation];
     } else {
         //open file option

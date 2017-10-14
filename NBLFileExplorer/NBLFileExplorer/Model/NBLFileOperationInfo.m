@@ -16,22 +16,22 @@
 
     switch (operationType) {
         case kNBLFileOperationTypeShowList:
-            _operationIcon = [UIImage imageNamed:@"list"];
+            _operationIcon = [UIImage imageNamed:@"icon.bundle/list"];
             _operationName = @"List";
             break;
             
         case kNBLFileOperationTypeShowGallery:
-            _operationIcon = [UIImage imageNamed:@"gallery"];
+            _operationIcon = [UIImage imageNamed:@"icon.bundle/gallery"];
             _operationName = @"Gallery";
             break;
         
         case kNBLFileOperationTypeEdit:
-            _operationIcon = [UIImage imageNamed:@"edit"];
+            _operationIcon = [UIImage imageNamed:@"icon.bundle/edit"];
             _operationName = @"Edit";
             break;
             
         case kNBLFileOperationTypeSort:
-            _operationIcon = [UIImage imageNamed:@"sort"];
+            _operationIcon = [UIImage imageNamed:@"icon.bundle/sort"];
             _operationName = @"Sort";
             break;
             

@@ -176,8 +176,8 @@
         default:
             break;
     }
-    
-    return [UIImage imageNamed:fileTypeStr];
+    NSString *tmpStr = [NSString stringWithFormat:@"icon.bundle/%@", fileTypeStr];
+    return [UIImage imageNamed:tmpStr];
 }
 
 @end

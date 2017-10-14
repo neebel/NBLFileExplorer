@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B6C3B841F922302002BD75B /* icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B6C3B831F922302002BD75B /* icon.bundle */; };
 		B73505EA1E09162B0031A6D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B73505E91E09162B0031A6D1 /* main.m */; };
 		B73505ED1E09162B0031A6D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B73505EC1E09162B0031A6D1 /* AppDelegate.m */; };
 		B73505F01E09162B0031A6D1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73505EF1E09162B0031A6D1 /* ViewController.m */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B6C3B831F922302002BD75B /* icon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = icon.bundle; path = NBLFileExplorer/icon.bundle; sourceTree = SOURCE_ROOT; };
 		B73505E51E09162B0031A6D1 /* NBLFileExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBLFileExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73505E91E09162B0031A6D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B73505EB1E09162B0031A6D1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				B73505F11E09162B0031A6D1 /* Main.storyboard */,
 				B73505F61E09162B0031A6D1 /* LaunchScreen.storyboard */,
 				B73505F91E09162B0031A6D1 /* Info.plist */,
+				4B6C3B831F922302002BD75B /* icon.bundle */,
 				B73505E81E09162B0031A6D1 /* Supporting Files */,
 			);
 			path = NBLFileExplorer;
@@ -371,6 +374,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B6C3B841F922302002BD75B /* icon.bundle in Resources */,
 				B73505F81E09162B0031A6D1 /* LaunchScreen.storyboard in Resources */,
 				B7BB7AE01E31E62400AAD987 /* Assets.xcassets in Resources */,
 				B73505F31E09162B0031A6D1 /* Main.storyboard in Resources */,

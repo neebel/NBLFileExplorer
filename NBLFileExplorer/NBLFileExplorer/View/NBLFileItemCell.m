@@ -78,7 +78,7 @@
 {
     UIImage *fileImage = nil;
     if (fileInfo.isFolder) {
-        fileImage = [UIImage imageNamed:@"folder"];
+        fileImage = [UIImage imageNamed:@"icon.bundle/folder"];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
         fileImage = [NBLFileTypeManager searchFileLogoWithFileType:fileInfo.fileType];
